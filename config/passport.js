@@ -8,17 +8,12 @@ const user = {
 };
 
 passport.use(
-	new LocalStrategy(
-		{
-			userfield: 'username',
-		},
-		(username, password, done) => {
-			if (username === user.username && password === user.password) {
-				done(null, user);
-			}
-			done(null, false);
+	new LocalStrategy((username, password, done) => {
+		if (username === user.username && password === user.password) {
+			return done(null, user);
 		}
-	)
+		done(null, false);
+	})
 );
 
 passport.serializeUser((user, done) => {
